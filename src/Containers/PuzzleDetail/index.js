@@ -61,16 +61,14 @@ class PuzzleDetail extends Component {
           this.state.buttonPosition, // Auto-multiplexed
           {
             toValue: 150,
-            duration: 500,
-            easing: Easing.inOut(Easing.exp, 1000)
+            duration: 500
           }
         ),
         Animated.timing(
           this.state.buttonPosition, // Auto-multiplexed
           {
             toValue: 0,
-            duration: 500,
-            easing: Easing.inOut(Easing.exp, 0.1)
+            duration: 500
           }
         )
       ])
@@ -99,12 +97,6 @@ class PuzzleDetail extends Component {
   }
 
   closeDetail() {
-    const url = 'https://www.youtube.com/watch?v=1PzINPndJS0';
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      }
-    });
     this.setState(
       {
         animation: true,

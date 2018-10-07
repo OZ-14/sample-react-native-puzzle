@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Animated, ScrollView, Eeasing} from 'react-native';
 import Flame from '../../Components/Flame';
-import StartScreen from '../../Components/StartScreen';
+import StartScreen from '../StartScreen';
 import PuzzleDetail from '../PuzzleDetail';
 import Size from '../../Utils/Size.js'
 import puzzles from '../../Mock/Puzzles.js';
