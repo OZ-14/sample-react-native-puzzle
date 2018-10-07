@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Animated, TouchableWithoutFeedback, ScrollView, Easing, Linking} from 'react-native';
+import {Text, View, Animated, TouchableWithoutFeedback, ScrollView} from 'react-native';
 import Flame from '../../Components/Flame';
 import Size from '../../Utils/Size';
 import Style from '../../Utils/Style';
-import styles from './style'
+import styles from './style';
 
 class PuzzleDetail extends Component {
   constructor(props){
@@ -17,7 +17,7 @@ class PuzzleDetail extends Component {
       buttonPosition: new Animated.Value(0),
       buttonOpacity: new Animated.Value(1),
       playPuzzle: false
-    }
+    };
     this.positionY = null;
   }
 
@@ -40,7 +40,7 @@ class PuzzleDetail extends Component {
 
   onPressStart = () => {
     Animated.timing(
-      this.state.buttonOpacity, // Auto-multiplexed
+      this.state.buttonOpacity,
       {
         toValue: 0,
         duration: 300
@@ -49,30 +49,28 @@ class PuzzleDetail extends Component {
       this.setState({
         playPuzzle: true
       })
-    })
+    });
   }
 
   openDetail() {
-     console.log(Easing.sin);
-     console.log(Easing.inOut)
     Animated.loop(
       Animated.sequence([
         Animated.timing(
-          this.state.buttonPosition, // Auto-multiplexed
+          this.state.buttonPosition,
           {
             toValue: 150,
             duration: 500
           }
         ),
         Animated.timing(
-          this.state.buttonPosition, // Auto-multiplexed
+          this.state.buttonPosition,
           {
             toValue: 0,
             duration: 500
           }
         )
       ])
-    ).start()
+    ).start();
 
     this.setState(
       {
@@ -81,7 +79,7 @@ class PuzzleDetail extends Component {
       },
       () => {
         Animated.timing(
-          this.state.transition, // Auto-multiplexed
+          this.state.transition,
           {
             toValue: 1,
             duration: 300
@@ -91,7 +89,7 @@ class PuzzleDetail extends Component {
             animation: false,
             visibleHeader: !this.state.visibleHeader
           })
-        })
+        });
       }
     )
   }
@@ -104,7 +102,7 @@ class PuzzleDetail extends Component {
       },
       () => {
         Animated.timing(
-          this.state.transition, // Auto-multiplexed
+          this.state.transition,
           {
             toValue: 0,
             duration: 300
@@ -116,9 +114,9 @@ class PuzzleDetail extends Component {
             playPuzzle: false
           })
           this.state.buttonOpacity.setValue(1)
-        })
+        });
       }
-    )
+    );
   }
 
   render() {
@@ -136,43 +134,43 @@ class PuzzleDetail extends Component {
     const headerImageSize = transition.interpolate({
       inputRange: [0, 1],
       outputRange: [Size.ScreenWidth - 30, Size.ScreenWidth]
-    })
+    });
 
     const containerTop = transition.interpolate({
       inputRange: [0, 1],
       outputRange: [0, (this.props.scrollY - this.positionY)]
-    })
+    });
 
     const contentHeight = transition.interpolate({
       inputRange: [0, 1],
       outputRange: [Size.ScreenWidth - 30, Size.ScreenHeight]
-    })
+    });
 
     const headerHeight = contentScrollY.interpolate({
       inputRange: [0, Size.ScreenWidth - 56],
       outputRange: [Size.ScreenWidth, 56],
       extrapolate: 'clamp'
-    })
+    });
 
     const headerOpacity = contentScrollY.interpolate({
       inputRange: [0, Size.ScreenWidth - 56],
       outputRange: [0, 1]
-    })
+    });
 
 
     return (
       <Animated.View
-      style={[
-        Style.bg('#fff'),
-        Style.h(contentHeight),
-        {top:containerTop, zIndex: transition},
-        !this.state.visible && Style.mb(10)
-      ]}
-      onLayout={(e) => {
-        if(!this.positionY) {
-          this.positionY = e.nativeEvent.layout.y
-        }
-      }}
+        style={[
+          Style.bg('#fff'),
+          Style.h(contentHeight),
+          {top:containerTop, zIndex: transition},
+          !this.state.visible && Style.mb(10)
+        ]}
+        onLayout={(e) => {
+          if(!this.positionY) {
+            this.positionY = e.nativeEvent.layout.y
+          }
+        }}
       >
         <ScrollView
           onScroll={Animated.event(
@@ -181,23 +179,24 @@ class PuzzleDetail extends Component {
         >
 
           <Animated.View
-          source={puzzle.image}
-          style={[
-            Style.w(headerImageSize),
-            Style.h(headerImageSize),
-            styles.headerImgae
-          ]}/>
+            source={puzzle.image}
+            style={[
+              Style.w(headerImageSize),
+              Style.h(headerImageSize),
+              styles.headerImgae
+            ]}
+          />
 
 
         {this.state.visible && (
           <Animated.View style={[{ opacity: transition }]}>
             <Text style={[styles.description]}>{puzzle.description}</Text>
             <View style={[{height: 150}]} />
-            {puzzle.text.map((text) => {
-              return (
-                <Text key={`${text}`} style={[styles.text]} >{text}</Text>
-              )
-            })}
+              {puzzle.text.map((text) => {
+                return (
+                  <Text key={`${text}`} style={[styles.text]} >{text}</Text>
+                )
+              })}
             <View style={[{height: 350}]} />
 
             <View style={[{alignItems: 'center'}, Style.mv(32)]}>
@@ -225,25 +224,27 @@ class PuzzleDetail extends Component {
             onPress={this.onPress}
           >
             <Animated.Image
-            source={puzzle.image}
-            style={[
-              Style.w(headerImageSize),
-              visibleHeader ? Style.h(headerHeight) : Style.h(headerImageSize),
-              styles.headerImgae
-            ]}/>
+              source={puzzle.image}
+              style={[
+                Style.w(headerImageSize),
+                visibleHeader ? Style.h(headerHeight) : Style.h(headerImageSize),
+                styles.headerImgae
+              ]}
+            />
           </TouchableWithoutFeedback>
           {this.state.visible && (
-          <Animated.View
-          style={[
-            styles.headerContainer,
-            Style.bg('#fff'),
-            Style.h(headerHeight),
-            {opacity: headerOpacity}
-          ]}>
-            <View style={[styles.titleContainer]}>
-            <Text style={[styles.titleText, Style.pl(16)]}>{puzzle.title}</Text>
-            </View>
-          </Animated.View>
+            <Animated.View
+              style={[
+                styles.headerContainer,
+                Style.bg('#fff'),
+                Style.h(headerHeight),
+                {opacity: headerOpacity}
+              ]}
+            >
+              <View style={[styles.titleContainer]}>
+                <Text style={[styles.titleText, Style.pl(16)]}>{puzzle.title}</Text>
+              </View>
+            </Animated.View>
             )}
           {this.state.visibleHeader && (
             <TouchableWithoutFeedback
@@ -255,8 +256,6 @@ class PuzzleDetail extends Component {
             </TouchableWithoutFeedback>
           )}
         </View>
-
-
       </Animated.View>
     );
   }

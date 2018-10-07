@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Animated, ScrollView, TouchableWithoutFeedback} from 'react-native';
-import Size from '../../Utils/Size.js'
-import puzzles from '../../Mock/Puzzles.js';
-import styles from './style'
+import {Text, View, Animated, TouchableWithoutFeedback} from 'react-native';
+import Size from '../../Utils/Size.js';
+import styles from './style';
 
 
 class StartScreen extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
       close: false,
       opacity1: new Animated.Value(1),
       opacity2: new Animated.Value(0),
       opacity3: new Animated.Value(0),
       opacityScreen: new Animated.Value(1)
-    }
+    };
   }
 
   componentDidMount() {
@@ -49,7 +48,7 @@ class StartScreen extends Component {
           duration: 800
         }
       )
-    ]).start()
+    ]).start();
   }
 
   onPress = () => {
@@ -61,7 +60,7 @@ class StartScreen extends Component {
       }
     ).start(() => {
       this.setState({close: true})
-    })
+    });
   }
 
 
@@ -96,9 +95,9 @@ class StartScreen extends Component {
         <TouchableWithoutFeedback
           onPress={this.onPress}
         >
-        <View style={[styles.button]}>
-          <Text >始める</Text>
-        </View>
+          <View style={[styles.button]}>
+            <Text >始める</Text>
+          </View>
         </TouchableWithoutFeedback>
       </Animated.View>
     );
